@@ -4,7 +4,7 @@
   "endingRoom": "Siebel1314",
   "rooms": [
     {
-      "name": "MatthewsStreet",
+      "name": "MatthewsStreet", //0********
       "description": "You are on Matthews, outside the Siebel Center",
       "items": ["coin"],
       "directions": [
@@ -15,7 +15,7 @@
       ]
     },
     {
-      "name": "SiebelEntry",
+      "name": "SiebelEntry", //1**************
       "description": "You are in the west entry of Siebel Center.  You can see the elevator, the ACM office, and hallways to the north and east.",
       "items": ["sweatshirt", "key"],
       "directions": [
@@ -38,7 +38,7 @@
       ]
     },
     {
-      "name": "AcmOffice",
+      "name": "AcmOffice", //2**********************
       "description": "You are in the ACM office.  There are lots of friendly ACM people.",
       "items": ["pizza", "swag"],
       "directions": [
@@ -49,7 +49,7 @@
       ]
     },
     {
-      "name": "SiebelNorthHallway",
+      "name": "SiebelNorthHallway", //3***************************
       "description": "You are in the north hallway.  You can see Siebel 1112 and the door toward NCSA.",
       "directions": [
         {
@@ -63,7 +63,7 @@
       ]
     },
     {
-      "name": "Siebel1112",
+      "name": "Siebel1112", //4******************************************
       "description": "You are in Siebel 1112.  There is space for two code reviews in this room.",
       "items": ["USB-C connector", "grading rubric"],
       "directions": [
@@ -74,7 +74,7 @@
       ]
     },
     {
-      "name": "SiebelEastHallway",
+      "name": "SiebelEastHallway", //5**********************************************
       "description": "You are in the east hallway.  You can see Einstein Bros' Bagels and a stairway.",
       "items": ["bagel", "coffee"],
       "directions": [
@@ -93,7 +93,7 @@
       ]
     },
     {
-      "name": "Siebel1314",
+      "name": "Siebel1314", //6*************************************************
       "description": "You are in Siebel 1314.  There are happy CS 126 students doing a code review.",
       "directions": [
         {
@@ -103,7 +103,7 @@
       ]
     },
     {
-      "name": "SiebelBasement",
+      "name": "SiebelBasement", //7***********************************************
       "description": "You are in the basement of Siebel.  You see tables with students working and door to computer labs.",
       "items": ["pencil"],
       "directions": [
