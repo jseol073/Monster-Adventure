@@ -1,11 +1,23 @@
 package Adventure;
 
 public class GamePlay {
-//    public static void playGame(String userInput, int currentRoomIndex, Layout layout) {
-//        int roomIndex = 0;
-//        if ((userInput.substring(0, 2).equalsIgnoreCase("go"))) {
-//            roomIndex = GoMethods.goToNextRoom(userInput, currentRoomIndex, layout);
-//            Adventure.main();
-//        }
-//    }
+    public static final String GO = "go";
+    public static final String TAKE_OR_DROP = "takeOrDrop";
+    public static final String LIST = "list";
+    public static final String FALSEARG = "I don't understand";
+    private static final int MIN_STR_LENGTH = 4;
+
+    public static String userInputCommand(String userInput) {
+        if (userInput.length() >= MIN_STR_LENGTH) {
+            if (userInput.substring(0, 2).equalsIgnoreCase("go")) {
+                return GO;
+            } else if (userInput.substring(0, 4).equalsIgnoreCase("take")
+                    || userInput.substring(0, 4).equalsIgnoreCase("drop")) {
+                return TAKE_OR_DROP;
+            } else if (userInput.substring(0, 4).equalsIgnoreCase("list")) {
+                return LIST;
+            }
+        }
+        return FALSEARG;
+    }
 }

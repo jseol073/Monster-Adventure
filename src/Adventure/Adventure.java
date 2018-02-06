@@ -49,8 +49,13 @@ public class Adventure {
             System.out.println("This room has these items: " + Arrays.toString(itemArr));
             System.out.println("From here you can go: " + GoMethods.getDirectionNamesAsList(gameIndex, layout).toString());
             String userInput = sc.nextLine();
-            int currGameIndex = gameIndex;
-            gameIndex = GoMethods.goToNextRoom(userInput, currGameIndex, layout);
+            String whichCommand = GamePlay.userInputCommand(userInput);
+            if (whichCommand.equals(GamePlay.GO)) {
+                int currGameIndex = gameIndex;
+                gameIndex = GoMethods.goToNextRoom(userInput, currGameIndex, layout);
+            } else if (whichCommand.equals(GamePlay.LIST)) {
+                System.out.println("This room has these items: " + Arrays.toString(itemArr));
+            }
         }
         sc.close();
     }

@@ -75,6 +75,13 @@ public class GoMethodsTest {
     }
 
     @Test
+    public void getADirectionCapsTest() {
+        userInput = "go EaSt";
+        String output = "east";
+        assertEquals(output, GoMethods.getADirection(userInput));
+    }
+
+    @Test //********* do later
     public void getADirectionFalseTest() {
         userInput = "go east";
         String output = "east";
@@ -83,6 +90,6 @@ public class GoMethodsTest {
 
     @Test
     public void getDirectionNamesAsList() {
-        
+
     }
 }
