@@ -34,6 +34,10 @@ public class Room {
         return items;
     }
 
+    public void setItems(String[] items) {
+        this.items = items;
+    }
+
     public Directions[] getDirections() {
         return directions;
     }

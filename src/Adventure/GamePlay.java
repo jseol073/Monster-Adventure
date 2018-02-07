@@ -4,7 +4,7 @@ public class GamePlay {
     public static final String GO = "go";
     public static final String TAKE_OR_DROP = "takeOrDrop";
     public static final String LIST = "list";
-    public static final String FALSEARG = "I don't understand";
+    public static final String FALSE_COMMAND = "I don't understand";
     private static final int MIN_STR_LENGTH = 4;
 
     public static String userInputCommand(String userInput) {
@@ -18,6 +18,6 @@ public class GamePlay {
                 return LIST;
             }
         }
-        return FALSEARG;
+        return FALSE_COMMAND;
     }
 }

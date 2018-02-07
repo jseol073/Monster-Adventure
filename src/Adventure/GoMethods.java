@@ -12,7 +12,8 @@ public class GoMethods {
         String intendedDirection = getADirection(userInput);
         String roomName = "";
         if (!canGoDirection(intendedDirection, roomIndex, layout)) {
-            return 3;
+            System.out.println("Can't go there");
+            return roomIndex;
         }
         for (int directionIndex = 0; directionIndex < directions.length; directionIndex++) {
             if (intendedDirection.equalsIgnoreCase(directions[directionIndex].getDirectionName())) {

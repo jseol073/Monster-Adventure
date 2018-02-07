@@ -7,6 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -89,7 +92,20 @@ public class GoMethodsTest {
     }
 
     @Test
-    public void getDirectionNamesAsList() {
+    public void getDirectionNamesAsListTest() {
+        roomIndex = 0;
+        String[] directionNameArrr = {"East"};
+        List<String> directionNameAsList = new ArrayList<>(Arrays.asList(directionNameArrr));
+        assertEquals(directionNameAsList, GoMethods.getDirectionNamesAsList(roomIndex, layout));
+
+    }
+
+    @Test
+    public void getDirectionNamesAsListDiffIndexTest() {
+        roomIndex = 5;
+        String[] directionNameArrr = {"West", "South", "Down"};
+        List<String> directionNameAsList = new ArrayList<>(Arrays.asList(directionNameArrr));
+        assertEquals(directionNameAsList, GoMethods.getDirectionNamesAsList(roomIndex, layout));
 
     }
 }
