@@ -55,22 +55,15 @@ public class TakeAndDropMethodsTest {
     }
 
     @Test
-    public void getItemNameIndexNullTest() {
+    public void isTakeTest() {
         userInput = "take bagel";
-        String output = "bagel";
-        assertEquals(output, TakeAndDropMethods.getItemName(userInput));
+        assertEquals(true, TakeAndDropMethods.isTake(userInput));
     }
 
     @Test
-    public void isTakeOrDropTakeTest() {
-        userInput = "take bagel";
-        assertEquals(true, TakeAndDropMethods.isTakeOrDrop(userInput));
-    }
-
-    @Test
-    public void isTakeOrDropDropTest() {
+    public void isTakeDropTest() {
         userInput = "drop bagel";
-        assertEquals(false, TakeAndDropMethods.isTakeOrDrop(userInput));
+        assertEquals(false, TakeAndDropMethods.isTake(userInput));
     }
 
     @Test
@@ -83,6 +76,13 @@ public class TakeAndDropMethodsTest {
     @Test
     public void getItemNameWhiteSpaceTest() {
         userInput = "take s ";
+        String output = "";
+        assertEquals(output, TakeAndDropMethods.getItemName(userInput));
+    }
+
+    @Test
+    public void getItemNameDropTest() {
+        userInput = "drop s ";
         String output = "";
         assertEquals(output, TakeAndDropMethods.getItemName(userInput));
     }
@@ -113,6 +113,14 @@ public class TakeAndDropMethodsTest {
         userInput = "take coin";
         roomIndex = 0;
         boolean output = true;
+        assertEquals(output, TakeAndDropMethods.removeItemFromList(userInput, roomIndex, layout));
+    }
+
+    @Test
+    public void removeItemFromListTakeTrueTest() {
+        userInput = "drop pizza";
+        roomIndex = 0;
+        boolean output = false;
         assertEquals(output, TakeAndDropMethods.removeItemFromList(userInput, roomIndex, layout));
     }
 

@@ -8,13 +8,15 @@ public class GamePlay {
     private static final int MIN_STR_LENGTH = 4;
 
     public static String userInputCommand(String userInput) {
-        if (userInput.length() >= MIN_STR_LENGTH) {
-            if (userInput.substring(0, 2).equalsIgnoreCase("go")) {
+        String userInputLwrCase = userInput.toLowerCase();
+        String lwrCaseTrimmed = userInputLwrCase.trim();
+        if (lwrCaseTrimmed.length() >= MIN_STR_LENGTH) {
+            if (lwrCaseTrimmed.substring(0, 2).equalsIgnoreCase("go")) {
                 return GO;
-            } else if (userInput.substring(0, 4).equalsIgnoreCase("take")
-                    || userInput.substring(0, 4).equalsIgnoreCase("drop")) {
+            } else if (lwrCaseTrimmed.substring(0, 4).equalsIgnoreCase("take")
+                    || lwrCaseTrimmed.substring(0, 4).equalsIgnoreCase("drop")) {
                 return TAKE_OR_DROP;
-            } else if (userInput.substring(0, 4).equalsIgnoreCase("list")) {
+            } else if (lwrCaseTrimmed.substring(0, 4).equalsIgnoreCase("list")) {
                 return LIST;
             }
         }

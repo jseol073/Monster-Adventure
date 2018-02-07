@@ -6,7 +6,13 @@ import java.util.List;
 
 public class GoMethods {
 
-    //get Directions[] index of next room
+    /**
+     *
+     * @param userInput
+     * @param roomIndex
+     * @param layout
+     * @return index of where the next room will be
+     */
     public static int goToNextRoom(String userInput, int roomIndex, Layout layout) {
         Directions[] directions = layout.getRooms()[roomIndex].getDirections();
         String intendedDirection = getADirection(userInput);
@@ -30,12 +36,14 @@ public class GoMethods {
         return indexOfNextRoom;
     }
 
+    /**
+     * helper method for getNextIndex
+     * @param userInput
+     * @return the direction the user wants to go
+     */
     //helper method for getNextIndex
     //getting direction from user's input
     public static String getADirection(String userInput) {
-//        if (!(userInput.substring(0, 2).equalsIgnoreCase("go"))) {
-//            throw new IllegalArgumentException("Does not start with go");
-//        }
         String aDirection = "";
         String commandToLowerCase = userInput.toLowerCase();
         String[] directionArr = {"east", "west", "north", "south", "northeast", "down", "up"};
@@ -47,8 +55,13 @@ public class GoMethods {
         return aDirection;
     }
 
-    //helper method for getNextIndex
-    //boolean to find whether the next direction is valid
+    /**
+     * helper method for getNextIndex
+     * @param aDirection, output of getADirection method
+     * @param roomIndex
+     * @param layout
+     * @return boolean to find whether the next direction is valid
+     */
     public static boolean canGoDirection(String aDirection, int roomIndex, Layout layout) {
         List<String> directionList = getDirectionNamesAsList(roomIndex, layout);
         for (int i = 0; i < directionList.size(); i++) {
@@ -59,7 +72,12 @@ public class GoMethods {
         return false;
     }
 
-    //creates list of the possible directions by directionName
+    /**
+     * helper method for canGoDirection method
+     * @param roomIndex
+     * @param layout
+     * @return creates list of the possible directions by directionName
+     */
     public static List<String> getDirectionNamesAsList(int roomIndex, Layout layout) {
         Directions[] directions = layout.getRooms()[roomIndex].getDirections();
         ArrayList<String> directionsList = new ArrayList<>();

@@ -15,7 +15,6 @@ public class AdventureTest {
 
     @Test(expected = MalformedURLException.class)
     public void main() {
-
     }
 
     @Test

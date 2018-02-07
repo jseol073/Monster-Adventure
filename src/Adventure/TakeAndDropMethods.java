@@ -5,12 +5,11 @@ import java.util.Arrays;
 
 public class TakeAndDropMethods {
     public static final String TAKE = "take";
-    public static final String DROP = "drop";
 
     /**
-     *
+     * takes userInput and see if it matches one of the items
      * @param userInput
-     * @return
+     * @return the name of the item only
      */
     // takes user's input and see if it contains an item of the current list it's on
     public static String getItemName(String userInput) {
@@ -32,17 +31,17 @@ public class TakeAndDropMethods {
         return itemName;
     }
 
-    //removes item from the list when user takes something
-
     /**
-     *
+     * removes item from the itemList of the room the user is when the user takes something
+     * In the main method, that item is added to the usersItemList
      * @param userInput
      * @param roomIndex
      * @param layout
-     * @return
+     * @return boolean true if prevList does not equal newList for testcases;
+     * otherwise, it is a void method
      */
     public static boolean removeItemFromList(String userInput, int roomIndex, Layout layout) {
-        if (!(isTakeOrDrop(userInput))) {
+        if (!(isTake(userInput))) {
             return false;
         }
         String userInputLwrCase = userInput.toLowerCase();
@@ -66,14 +65,16 @@ public class TakeAndDropMethods {
     }
 
     /**
-     *
+     * adds item to the itemList of the room the user is when the user drops the item
+     * In the main method, that item is removed from the usersItemList
      * @param userInput
      * @param roomIndex
      * @param layout
-     * @return
+     * @return boolean true if prevList does not equal newList for testcases;
+     * otherwise, it is a void method
      */
-    public static boolean dropToAddItemToList(String userInput, int roomIndex, Layout layout) {
-        if (isTakeOrDrop(userInput)) {
+    public static boolean dropItemFromList(String userInput, int roomIndex, Layout layout) {
+        if (isTake(userInput)) {
             return false;
         }
         String itemName = getItemName(userInput);
@@ -94,12 +95,12 @@ public class TakeAndDropMethods {
     }
 
     /**
-     * Helper method for removeItemFromList and dropToAddItemToList
+     * Helper method for removeItemFromList and dropItemFromList
      * Only for testcases
      * @param userInput
      * @return boolean true if take command, false if drop command
      */
-    public static boolean isTakeOrDrop(String userInput) {
+    public static boolean isTake(String userInput) {
         String userInputLwrCase = userInput.toLowerCase();
         if (userInputLwrCase.contains(TAKE)) {
             return true;

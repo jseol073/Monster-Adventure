@@ -63,8 +63,16 @@ public class GoMethodsTest {
     }
 
     @Test
-    public void goToNextRoomOtherRoomTest() {
-        userInput = "go south";
+    public void goToNextRoomOtherRoomWhiteSpaceTest() {
+        userInput = "go   south";
+        roomIndex = 5;
+        int output = 6;
+        assertEquals(output, GoMethods.goToNextRoom(userInput, roomIndex, layout));
+    }
+
+    @Test
+    public void goToNextRoomOtherRoomCaseTest() {
+        userInput = "Go   soUth";
         roomIndex = 5;
         int output = 6;
         assertEquals(output, GoMethods.goToNextRoom(userInput, roomIndex, layout));
@@ -80,13 +88,6 @@ public class GoMethodsTest {
     @Test
     public void getADirectionCapsTest() {
         userInput = "go EaSt";
-        String output = "east";
-        assertEquals(output, GoMethods.getADirection(userInput));
-    }
-
-    @Test //********* do later
-    public void getADirectionFalseTest() {
-        userInput = "go east";
         String output = "east";
         assertEquals(output, GoMethods.getADirection(userInput));
     }
