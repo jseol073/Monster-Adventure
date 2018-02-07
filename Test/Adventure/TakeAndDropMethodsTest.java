@@ -29,78 +29,83 @@ public class TakeAndDropMethodsTest {
     @Test
     public void getItemNameTest() {
         userInput = "take coin";
-        roomIndex = 0;
         String output = "coin";
-        assertEquals(output, TakeAndDropMethods.getItemName(userInput, roomIndex, layout));
+        assertEquals(output, TakeAndDropMethods.getItemName(userInput));
     }
 
     @Test
     public void getItemNameCaseTest() {
         userInput = "take CoIn";
-        roomIndex = 0;
         String output = "coin";
-        assertEquals(output, TakeAndDropMethods.getItemName(userInput, roomIndex, layout));
+        assertEquals(output, TakeAndDropMethods.getItemName(userInput));
     }
 
     @Test
     public void getItemNameIndexTest() {
         userInput = "take bagel";
-        roomIndex = 5;
         String output = "bagel";
-        assertEquals(output, TakeAndDropMethods.getItemName(userInput, roomIndex, layout));
+        assertEquals(output, TakeAndDropMethods.getItemName(userInput));
     }
 
     @Test
     public void getItemNameIndexEmptyTest() {
         userInput = "";
-        roomIndex = 5;
         String output = "";
-        assertEquals(output, TakeAndDropMethods.getItemName(userInput, roomIndex, layout));
+        assertEquals(output, TakeAndDropMethods.getItemName(userInput));
     }
 
     @Test
     public void getItemNameIndexNullTest() {
         userInput = "take bagel";
-        roomIndex = 3;
-        String output = "";
-        assertEquals(output, TakeAndDropMethods.getItemName(userInput, roomIndex, layout));
+        String output = "bagel";
+        assertEquals(output, TakeAndDropMethods.getItemName(userInput));
     }
 
     @Test
     public void isTakeOrDropTakeTest() {
         userInput = "take bagel";
-        String output = "take";
-        assertEquals(output, TakeAndDropMethods.isTakeOrDrop(userInput));
+        assertEquals(true, TakeAndDropMethods.isTakeOrDrop(userInput));
     }
 
     @Test
     public void isTakeOrDropDropTest() {
         userInput = "drop bagel";
-        String output = "drop";
-        assertEquals(output, TakeAndDropMethods.isTakeOrDrop(userInput));
+        assertEquals(false, TakeAndDropMethods.isTakeOrDrop(userInput));
     }
 
     @Test
-    public void searchAllItemsTest() {
-        userInput = "dROp BaGeL";
-        roomIndex = 5;
-        String output = "bagel";
-        assertEquals(output, TakeAndDropMethods.getItemName(userInput, roomIndex, layout));
-    }
-
-    @Test
-    public void searchAllItemsOtherItemTest() {
+    public void getItemNameOtherItemTest() {
         userInput = "take sweatshirt";
         String output = "sweatshirt";
-        roomIndex = 1;
-        assertEquals(output, TakeAndDropMethods.getItemName(userInput, roomIndex, layout));
+        assertEquals(output, TakeAndDropMethods.getItemName(userInput));
     }
 
     @Test
     public void getItemNameWhiteSpaceTest() {
         userInput = "take s ";
         String output = "";
-        assertEquals(output, TakeAndDropMethods.getItemName(userInput, roomIndex, layout));
+        assertEquals(output, TakeAndDropMethods.getItemName(userInput));
+    }
+
+    @Test
+    public void getItemNameTwoWordTest() {
+        userInput = "take USB-C connector";
+        String output = "USB-C connector";
+        assertEquals(output, TakeAndDropMethods.getItemName(userInput));
+    }
+
+    @Test
+    public void getItemNameTwoWordSpaceTest() {
+        userInput = "take    USB-C connector       ";
+        String output = "USB-C connector";
+        assertEquals(output, TakeAndDropMethods.getItemName(userInput));
+    }
+
+    @Test
+    public void getItemNameTwoWordCaseTest() {
+        userInput = "take    USB-C cOnnEctor       ";
+        String output = "USB-C connector";
+        assertEquals(output, TakeAndDropMethods.getItemName(userInput));
     }
 
     @Test
@@ -112,7 +117,7 @@ public class TakeAndDropMethodsTest {
     }
 
     @Test
-    public void removeItemFromListFalseArgTest() {
+    public void removeItemFromListFalseCommandTest() {
         userInput = "take bagel";
         roomIndex = 0;
         boolean output = true;

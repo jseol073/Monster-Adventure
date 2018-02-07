@@ -10,46 +10,27 @@ public class TakeAndDropMethods {
     /**
      *
      * @param userInput
-     * @param roomIndex
-     * @param layout
      * @return
      */
     // takes user's input and see if it contains an item of the current list it's on
-    public static String getItemName(String userInput, int roomIndex, Layout layout) {
+    public static String getItemName(String userInput) {
+        if (userInput.isEmpty()) {
+            return "";
+        }
+        String[] allItems = {"coin", "sweatshirt", "key", "pizza", "swag",
+                "USB-C connector", "grading rubric", "bagel", "coffee", "pencil"};
         String userInputLwrCase = userInput.toLowerCase();
+        String itemOnly = userInputLwrCase.substring(4);
+        String itemOnlyTrimmed = itemOnly.trim();
         String itemName = "";
-        String[] currItemArr = layout.getRooms()[roomIndex].getItems();
-        for (int itemIndex = 0; itemIndex < currItemArr.length; itemIndex++) {
-            String currItem = currItemArr[itemIndex].toLowerCase();
-            if (userInputLwrCase.contains(currItem)) {
-                itemName = currItem;
+        ArrayList<String> allItemsList = new ArrayList<>(Arrays.asList(allItems));
+        for (int allItemsIndex = 0; allItemsIndex < allItemsList.size(); allItemsIndex++) {
+            if (itemOnlyTrimmed.equalsIgnoreCase(allItemsList.get(allItemsIndex))) {
+                itemName = allItemsList.get(allItemsIndex);
             }
         }
         return itemName;
     }
-
-//    public static String getItemName(String userInput, Layout layout) {
-//        String userInputLwrCase = userInput.toLowerCase();
-//        String itemName = "";
-//        Room[] allRooms = layout.getRooms();
-//        for (int i = 0; i < allRooms.length; i++) {
-//            String[] allItems = allRooms[i].getItems();
-//            ArrayList<String> allItemsList = new ArrayList<>();
-//            if (allItems != null) {
-//                allItemsList = new ArrayList<>(Arrays.asList(allItems));
-//            }
-//            for (int j = 0; j < allItemsList.size(); j++) {
-//                if (userInputLwrCase.contains(allItemsList.get(j))) {
-//                    itemName = allItemsList.get(j);
-//                }
-//            }
-//        }
-//        return itemName;
-//    }
-
-//    public static boolean isItemNameValid(String itemName) {
-//
-//    }
 
     //removes item from the list when user takes something
 
@@ -66,7 +47,7 @@ public class TakeAndDropMethods {
         }
         String userInputLwrCase = userInput.toLowerCase();
         String[] oldTempItemArr = layout.getRooms()[roomIndex].getItems();
-        String itemName = getItemName(userInput, roomIndex, layout);
+        String itemName = getItemName(userInput);
         String[] currItemArr = layout.getRooms()[roomIndex].getItems();
         ArrayList<String> currItemList = new ArrayList<>(Arrays.asList(currItemArr));
         for (int itemIndex = 0; itemIndex < currItemList.size(); itemIndex++) {
@@ -95,7 +76,7 @@ public class TakeAndDropMethods {
         if (isTakeOrDrop(userInput)) {
             return false;
         }
-        String itemName = getItemName(userInput, roomIndex, layout);
+        String itemName = getItemName(userInput);
         String[] currItemArr = layout.getRooms()[roomIndex].getItems();
         String[] tempItemArr = currItemArr;
         ArrayList<String> currItemList = new ArrayList<>();

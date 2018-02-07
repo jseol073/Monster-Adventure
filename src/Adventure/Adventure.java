@@ -39,6 +39,7 @@ public class Adventure {
             if (sc.nextLine().equalsIgnoreCase(QUIT)) {
                 break;
             }
+            //Interface Input:
             System.out.println("You are on " + layout.getRooms()[gameRoomIndex].getName());
             if (layout.getRooms()[gameRoomIndex].getName().equals(layout.getStartingRoom())) {
                 System.out.println("Your journey begins here.");
@@ -56,22 +57,28 @@ public class Adventure {
             }
             System.out.println("From here you can go: "
                     + GoMethods.getDirectionNamesAsList(gameRoomIndex, layout).toString());
+            //End game when reached final room
             if (layout.getRooms()[gameRoomIndex].getName().equals(layout.getEndingRoom())) {
                 System.out.println("You have reached the final destination.");
                 break;
             }
+            //Interface output:
             String userInput = sc.nextLine();
+            //Decides what type of command by user (GO, TakeOrDrop, List):
             String whichCommand = GamePlay.userInputCommand(userInput);
+            System.out.println("Command: " + GamePlay.userInputCommand(userInput));
             if (whichCommand.equals(GamePlay.GO)) {
                 gameRoomIndex = GoMethods.goToNextRoom(userInput, gameRoomIndex, layout);
             }  else if (whichCommand.equals(GamePlay.TAKE_OR_DROP)) {
                 if (TakeAndDropMethods.isTakeOrDrop(userInput)) {
                     TakeAndDropMethods.removeItemFromList(userInput, gameRoomIndex, layout);
-                    System.out.println(TakeAndDropMethods.getItemName(userInput, gameRoomIndex, layout));
-                    usersItems.add(TakeAndDropMethods.getItemName(userInput, gameRoomIndex, layout));
+                    //System.out.println(TakeAndDropMethods.getItemName(userInput));
+                    if (!(TakeAndDropMethods.getItemName(userInput).equalsIgnoreCase(""))) {
+                        usersItems.add(TakeAndDropMethods.getItemName(userInput));
+                    }
                 } else if (!(TakeAndDropMethods.isTakeOrDrop(userInput))) {
                     TakeAndDropMethods.dropToAddItemToList(userInput, gameRoomIndex, layout);
-                    usersItems.remove(TakeAndDropMethods.getItemName(userInput, gameRoomIndex, layout));
+                    usersItems.remove(TakeAndDropMethods.getItemName(userInput));
                 }
             } else if (whichCommand.equals(GamePlay.LIST)) {
                 if (usersItems == null || usersItems.isEmpty()) {

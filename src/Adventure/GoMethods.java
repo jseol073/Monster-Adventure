@@ -33,9 +33,9 @@ public class GoMethods {
     //helper method for getNextIndex
     //getting direction from user's input
     public static String getADirection(String userInput) {
-        if (!(userInput.substring(0, 2).equalsIgnoreCase("go"))) {
-            throw new IllegalArgumentException("Does not start with go");
-        }
+//        if (!(userInput.substring(0, 2).equalsIgnoreCase("go"))) {
+//            throw new IllegalArgumentException("Does not start with go");
+//        }
         String aDirection = "";
         String commandToLowerCase = userInput.toLowerCase();
         String[] directionArr = {"east", "west", "north", "south", "northeast", "down", "up"};
