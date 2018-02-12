@@ -27,9 +27,9 @@ public class Adventure {
     public static double playerHealth;
     public static boolean isDual = false;
     public static double monsterHealth;
+    public static String command;
 
     public static String getFileContentsAsString(String filename) {
-
         // Java uses Paths as an operating system-independent specification of the location of files.
         // In this case, we're looking for files that are in a directory called 'data' located in the
         // root directory of the project, which is the 'current working directory'.
@@ -55,16 +55,13 @@ public class Adventure {
         String jsonContent = getFileContentsAsString("siebel.json");
         Layout layout = new Layout();
         layout = gson.fromJson(jsonContent, Layout.class);
-        System.out.println(layout.toString());
         gameRoomIndex = GamePlay.getStartingRoom(layout);
         player = layout.getPlayer();
-
         // this is a 'for each' loop; they are useful when you want to do something to
         // every element of a collection and you don't care about the index of the element
         for (String arg : args) {
             System.out.print("\"" + arg + "\" ");
         }
-
 //        if (args.length <= 0) {
 //            System.out.println("File is too small");
 //        }
@@ -78,16 +75,20 @@ public class Adventure {
 //            System.out.println("Bad URL: " + url);
 //        }
 
-        // GAME FUNCTIONS:
-        //ArrayList<Item> usersItems = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
-        System.out.println("Press any key to play");
+        System.out.println("Press any key and enter to play");
         while (sc.hasNextLine() && (!(sc.nextLine().equalsIgnoreCase(QUIT))
             || !(sc.nextLine().equalsIgnoreCase(EXIT)))) {
+            playerHealth = player.getHealth();
+            playerAttack = player.getAttack();
             if (!isDual) {
                 System.out.println(GamePlay.jsonInfo(gameRoomIndex, layout));
                 String userInput = sc.nextLine();
                 System.out.println(GamePlay.handleUserInput(userInput, gameRoomIndex, layout));
+            } else {
+                System.out.println(Dual.jsonInfoDual(command, gameRoomIndex, layout, playerHealth));
+                String userInput = sc.nextLine();
+                System.out.println(Dual.handleUserInputDual(userInput, gameRoomIndex, layout));
             }
 
 

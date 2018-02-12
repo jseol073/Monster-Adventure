@@ -36,7 +36,7 @@ public class GamePlay {
         for (int dirIndex = 0; dirIndex < directions.length; dirIndex++) {
             directionNamesList.add(directions[dirIndex].getDirectionName());
         }
-        String directionNames = "From here you can go: " +directionNamesList.toString();
+        String directionNames = "From here you can go: " + directionNamesList.toString();
         String itemInfo = "This room is empty.";
         HashMap<String, Double> itemMap = new HashMap<>();
         if (layout.getRooms()[roomIndex].getItems() != null) {
@@ -69,40 +69,32 @@ public class GamePlay {
                 directionNames, itemInfo, monsterListStr);
     }
 
-    public static String jsonInfoDual(String command, int roomIndex, Layout layout, double plyrHealth, double monsterHealth) {
-        String playerHealth = PlayerInfo.playerHealthBar(PlayerInfo.FULL_HEALTH, plyrHealth);
-        Monster[] monstersArr = layout.getMonsters();
-        ArrayList<String> monstersNameList = new ArrayList<>();
-        for (int mIndex = 0; mIndex < monstersArr.length; mIndex++) {
-            monstersNameList.add(monstersArr[mIndex].getName());
-        }
-        
-        //double monsterHealth = layout.getRooms()[roomIndex].g
-        return "";
-    }
-
     public static String handleUserInput(String userInput, int roomIndex, Layout layout) {
         String userInputLwrCase = userInput.toLowerCase();
         String lwrCaseTrimmed = userInputLwrCase.trim();
         String[] inputSplitArr = lwrCaseTrimmed.split("\\s+", MIN_ARR_LENGTH);
-        if (inputSplitArr[0].equalsIgnoreCase(GO)) {
+        if (inputSplitArr.length >= 2) {
+            if (inputSplitArr[0].equalsIgnoreCase(GO) && !inputSplitArr[1].isEmpty()) {
                 return GoMethods.goingToNextRoom(inputSplitArr[1], roomIndex, layout);
-        } else if (inputSplitArr[0].equalsIgnoreCase(TAKE)
+            } else if (inputSplitArr[0].equalsIgnoreCase(TAKE)
                     || inputSplitArr[0].equalsIgnoreCase(DROP)) {
-            if (inputSplitArr[0].equalsIgnoreCase(TAKE)) {
-                TakeAndDropMethods.takeItem(inputSplitArr[1], roomIndex, layout);
-            } else if (inputSplitArr[0].equalsIgnoreCase(DROP)) {
-                TakeAndDropMethods.dropItem(inputSplitArr[1], roomIndex, layout);
+                if (inputSplitArr[0].equalsIgnoreCase(TAKE)) {
+                    TakeAndDropMethods.takeItem(inputSplitArr[1], roomIndex, layout);
+                } else if (inputSplitArr[0].equalsIgnoreCase(DROP)) {
+                    TakeAndDropMethods.dropItem(inputSplitArr[1], roomIndex, layout);
+                }
+            } else if (inputSplitArr[0].equalsIgnoreCase(DUAL)) {
+                if (Dual.canDualMonster(inputSplitArr[1], roomIndex, layout)) {
+                    Adventure.isDual = true;
+                    Adventure.command = inputSplitArr[1];
+                    return String.format("You are now in a dual with %s",
+                            Dual.getMonsterName(inputSplitArr[1], roomIndex, layout));
+                }
             }
         } else if (inputSplitArr[0].equalsIgnoreCase(LIST)) {
-                return List.listPlayerItems(layout);
+            return List.listPlayerItems(layout);
         } else if (inputSplitArr[0].equalsIgnoreCase(PLAYER_INFO)) {
-                return PlayerInfo.getPlayerInfo();
-        } else if (inputSplitArr[0].equalsIgnoreCase(DUAL)) {
-            if (Dual.canDualMonster(inputSplitArr[1], roomIndex, layout)) {
-                Adventure.isDual = true;
-                return "You are now in a dual";
-            }
+            return PlayerInfo.getPlayerInfo();
         } else {
             return FALSE_COMMAND;
         }

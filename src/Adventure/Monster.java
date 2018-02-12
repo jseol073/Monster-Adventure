@@ -5,6 +5,7 @@ public class Monster {
     private double attack;
     private double defense;
     private double health;
+    public static double fullHealth;
 
     public Monster() {
     }
@@ -40,5 +41,10 @@ public class Monster {
             }
         }
         return healthBar.toString();
+    }
+
+    public final double getFullHealth() {
+        double fullHealth = this.getHealth();
+        return fullHealth;
     }
 }

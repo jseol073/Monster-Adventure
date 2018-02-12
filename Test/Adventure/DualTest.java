@@ -51,6 +51,10 @@ public class DualTest {
     }
 
     @Test
-    public void dualMonster() {
+    public void getMonsterInRoomTest() {
+        command = "lion";
+        roomIndex = 1;
+        Monster output = layout.getMonsters()[0];
+        assertEquals(output, Dual.getMonsterInRoom(command, roomIndex, layout));
     }
 }

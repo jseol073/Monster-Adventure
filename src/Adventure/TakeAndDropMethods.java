@@ -8,7 +8,6 @@ public class TakeAndDropMethods {
     public static final String TAKE = "take";
 
     public static Item getItem(String command, int roomIndex, Layout layout) {
-        Item output = new Item();
         String[] commandSplit = command.split("\\s+");
         Item[] itemArr = layout.getRooms()[roomIndex].getItems();
         if (itemArr != null && !(itemArr.length == 0)) {
@@ -25,7 +24,7 @@ public class TakeAndDropMethods {
                 }
                 for (int i = 0; i < itemArr.length; i++) {
                     if (splitToWord.equalsIgnoreCase(itemArr[i].getName())) {
-                        return  itemArr[i];
+                        return itemArr[i];
                     }
                 }
             }
@@ -99,7 +98,6 @@ public class TakeAndDropMethods {
 
     public static void takeItem(String command, int roomIndex, Layout layout) {
         Item takenItem = getItem(command, roomIndex, layout);
-        System.out.printf("You do not have a %s", command);
         if (takenItem != null) {
             removeItemFromList(takenItem, roomIndex, layout);
             Adventure.playerItemList.add(takenItem);
