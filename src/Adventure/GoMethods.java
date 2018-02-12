@@ -7,55 +7,6 @@ import java.util.List;
 public class GoMethods {
 
     /**
-     *
-     * @param userInput
-     * @param roomIndex
-     * @param layout
-     * @return index of where the next room will be
-     */
-    public static int goToNextRoom(String userInput, int roomIndex, Layout layout) {
-        Directions[] directions = layout.getRooms()[roomIndex].getDirections();
-        String intendedDirection = getADirection(userInput);
-        String roomName = "";
-        if (!canGoDirection(intendedDirection, roomIndex, layout)) {
-            System.out.println("Can't go there");
-            return roomIndex;
-        }
-        for (int directionIndex = 0; directionIndex < directions.length; directionIndex++) {
-            if (intendedDirection.equalsIgnoreCase(directions[directionIndex].getDirectionName())) {
-                roomName = directions[directionIndex].getRoom();
-            }
-        }
-        int indexOfNextRoom = 0;
-        Room[] roomArray = layout.getRooms();
-        for (int rIndex = 0; rIndex < roomArray.length; rIndex++) {
-            if (roomName.equalsIgnoreCase(roomArray[rIndex].getName())) {
-                indexOfNextRoom = rIndex;
-            }
-        }
-        return indexOfNextRoom;
-    }
-
-    /**
-     * helper method for getNextIndex
-     * @param userInput
-     * @return the direction the user wants to go
-     */
-    //helper method for getNextIndex
-    //getting direction from user's input
-    public static String getADirection(String userInput) {
-        String aDirection = "";
-        String commandToLowerCase = userInput.toLowerCase();
-        String[] directionArr = {"east", "west", "north", "south", "northeast", "down", "up"};
-        for (int i = 0; i < directionArr.length; i++) {
-            if (commandToLowerCase.contains(directionArr[i])) {
-                aDirection = directionArr[i];
-            }
-        }
-        return aDirection;
-    }
-
-    /**
      * helper method for getNextIndex
      * @param aDirection, output of getADirection method
      * @param roomIndex
@@ -85,5 +36,46 @@ public class GoMethods {
             directionsList.add(directions[i].getDirectionName());
         }
         return directionsList;
+    }
+
+    public static String goingToNextRoom(String command, int roomIndex, Layout layout) {
+        String falseCommand = "";
+        String aDirection = getDirectionName(command, roomIndex, layout);
+        Directions[] directions = layout.getRooms()[roomIndex].getDirections();
+        String aDirectionRoom = getADirectionRoom(aDirection, directions);
+        Room[] roomArr = layout.getRooms();
+        if (canGoDirection(aDirection, roomIndex, layout)) {
+            //System.out.println(aDirectionRoom);
+            for (int rIndex = 0; rIndex < roomArr.length; rIndex++) {
+                //System.out.println(roomArr[rIndex].getName());
+                if (aDirectionRoom.equalsIgnoreCase(roomArr[rIndex].getName())) {
+                    Adventure.gameRoomIndex = rIndex;
+                }
+            }
+        }
+        //System.out.println("Room name: " + layout.getRooms()[Adventure.gameRoomIndex]);
+        return falseCommand;
+    }
+
+    public static String getDirectionName(String command, int roomIndex, Layout layout) {
+        String aDirection = String.format("Can't go to %s", command);
+        List<String> directionNameList = getDirectionNamesAsList(roomIndex, layout);
+        String commandTrim = command.trim();
+        for (int i = 0; i < directionNameList.size(); i++) {
+            if (commandTrim.equalsIgnoreCase(directionNameList.get(i))) {
+                aDirection = directionNameList.get(i);
+            }
+        }
+        return aDirection;
+    }
+
+    public static String getADirectionRoom(String aDirection, Directions[] directions) {
+        String directionRoom = "blah";
+        for (int i = 0; i < directions.length; i++) {
+            if (aDirection.equalsIgnoreCase(directions[i].getDirectionName())) {
+                directionRoom = directions[i].getRoom();
+            }
+        }
+        return directionRoom;
     }
 }

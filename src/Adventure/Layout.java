@@ -7,17 +7,10 @@ public class Layout {
     private String startingRoom;
     private String endingRoom;
     private Room[] rooms;
+    private Player player;
+    private Monster[] monsters;
 
     public Layout() {
-    }
-
-    @Override
-    public String toString() {
-        return "Layout{" +
-                "startingRoom='" + startingRoom + '\'' +
-                ", endingRoom='" + endingRoom + '\'' +
-                ", rooms=" + Arrays.toString(rooms) +
-                '}';
     }
 
     public String getStartingRoom() {
@@ -30,6 +23,23 @@ public class Layout {
 
     public Room[] getRooms() {
         return rooms;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public Monster[] getMonsters() {
+        return monsters;
+    }
+
+    @Override
+    public String toString() {
+        return "Layout{" +
+                "startingRoom='" + startingRoom + '\'' +
+                ", endingRoom='" + endingRoom + '\'' +
+                ", rooms=" + Arrays.toString(rooms) +
+                '}';
     }
 
     @Override

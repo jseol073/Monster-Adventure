@@ -1,25 +1,18 @@
 package Adventure;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class Room {
     private String name;
     private String description;
-    private String[] items;
+    private Item[] items;
     private Directions[] directions;
+    private String[] monstersInRoom;
+    private HashMap<String, Double> itemMap;
 
     public Room() {
-    }
-
-    @Override
-    public String toString() {
-        return "Room{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", items=" + Arrays.toString(items) +
-                ", directions=" + Arrays.toString(directions) +
-                '}';
     }
 
     public String getName() {
@@ -30,16 +23,39 @@ public class Room {
         return description;
     }
 
-    public String[] getItems() {
+    public Item[] getItems() {
         return items;
     }
 
-    public void setItems(String[] items) {
+    public void setItems(Item[] items) {
         this.items = items;
     }
 
     public Directions[] getDirections() {
         return directions;
+    }
+
+    public String[] getMonstersInRoom() {
+        return monstersInRoom;
+    }
+
+    public HashMap<String, Double> getItemMap() {
+        if (this.getItems() != null) {
+            for (int itemIndex = 0; itemIndex < this.getItems().length; itemIndex++) {
+                itemMap.put(this.getItems()[itemIndex].getName(), this.getItems()[itemIndex].getDamage());
+            }
+        }
+        return itemMap;
+    }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", items=" + Arrays.toString(items) +
+                ", directions=" + Arrays.toString(directions) +
+                '}';
     }
 
     @Override

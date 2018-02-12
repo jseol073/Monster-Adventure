@@ -1,12 +1,84 @@
-[
 {
   "startingRoom": "MatthewsStreet",
   "endingRoom": "Siebel1314",
+  "player": {
+    "name": "me",
+    "items": [
+      {
+        "name": "",
+        "damage": 0.0
+      }
+    ],
+    "attack": 2.0,
+    "defense": 1.0,
+    "health": 20.0,
+    "level": 1
+  },
+  "monsters": [
+    {
+      "name": "lion",
+      "attack": 2.0,
+      "defense": 1.0,
+      "health": 10.0,
+      "level" : 1
+    },
+    {
+      "name": "bear",
+      "attack": 2.2,
+      "defense": 1.5,
+      "health": 12.0,
+      "level" : 1
+    },
+    {
+      "name": "tiger",
+      "attack": 2.5,
+      "defense": 0.8,
+      "health": 9.0,
+      "level" : 1
+    },
+    {
+      "name": "elephant",
+      "attack": 0.5,
+      "defense": 2.5,
+      "health": 15.0,
+      "level" : 1
+    },
+    {
+      "name": "zombie",
+      "attack": 3.0,
+      "defense": 0.5,
+      "health": 12.0,
+      "level" : 2
+    },
+    {
+      "name": "ghost",
+      "attack": 9.0,
+      "defense": 2.0,
+      "health": 13.0,
+      "level" : 2
+    },
+    {
+      "name": "bigfoot",
+      "attack": 9.5,
+      "defense": 2.0,
+      "health": 15.0,
+      "level" : 2
+    }
+  ],
   "rooms": [
     {
-      "name": "MatthewsStreet", //0********
+      "name": "MatthewsStreet",
       "description": "You are on Matthews, outside the Siebel Center",
-      "items": ["coin"],
+      "items":  [
+        {
+          "name": "sword",
+          "damage": 5.0
+        },
+        {
+          "name": "rock",
+          "damage": 3.0
+        }
+      ],
       "directions": [
         {
           "directionName": "East",
@@ -15,9 +87,14 @@
       ]
     },
     {
-      "name": "SiebelEntry", //1**************
+      "name": "SiebelEntry",
       "description": "You are in the west entry of Siebel Center.  You can see the elevator, the ACM office, and hallways to the north and east.",
-      "items": ["sweatshirt", "key"],
+      "items":  [
+        {
+          "name": "pepper spray",
+          "damage": 1.0
+        }
+      ],
       "directions": [
         {
           "directionName": "West",
@@ -35,22 +112,35 @@
           "directionName": "East",
           "room": "SiebelEastHallway"
         }
-      ]
+      ],
+      "monstersInRoom": ["lion"]
     },
     {
-      "name": "AcmOffice", //2**********************
+      "name": "AcmOffice",
       "description": "You are in the ACM office.  There are lots of friendly ACM people.",
-      "items": ["pizza", "swag"],
+      "items":  [
+        {
+          "name": "gun",
+          "damage": 8.0
+        }
+      ],
       "directions": [
         {
           "directionName": "South",
           "room": "SiebelEntry"
         }
-      ]
+      ],
+      "monstersInRoom": ["bear"]
     },
     {
-      "name": "SiebelNorthHallway", //3***************************
+      "name": "SiebelNorthHallway",
       "description": "You are in the north hallway.  You can see Siebel 1112 and the door toward NCSA.",
+      "items":  [
+        {
+          "name": "shotgun",
+          "damage": 10.0
+        }
+      ],
       "directions": [
         {
           "directionName": "South",
@@ -60,23 +150,35 @@
           "directionName": "NorthEast",
           "room": "Siebel1112"
         }
-      ]
+      ],
+      "monstersInRoom": ["tiger"]
     },
     {
-      "name": "Siebel1112", //4******************************************
+      "name": "Siebel1112",
       "description": "You are in Siebel 1112.  There is space for two code reviews in this room.",
-      "items": ["USB-C connector", "grading rubric"],
+      "items":  [
+        {
+          "name": "grenade",
+          "damage": 11.0
+        }
+      ],
       "directions": [
         {
           "directionName": "West",
           "room": "SiebelNorthHallway"
         }
-      ]
+      ],
+      "monstersInRoom": ["elephant", "zombie"]
     },
     {
-      "name": "SiebelEastHallway", //5**********************************************
+      "name": "SiebelEastHallway",
       "description": "You are in the east hallway.  You can see Einstein Bros' Bagels and a stairway.",
-      "items": ["bagel", "coffee"],
+      "items":  [
+        {
+          "name": "bazooka",
+          "damage": 20.0
+        }
+      ],
       "directions": [
         {
           "directionName": "West",
@@ -90,10 +192,11 @@
           "directionName": "Down",
           "room": "SiebelBasement"
         }
-      ]
+      ],
+      "monstersInRoom": ["ghost"]
     },
     {
-      "name": "Siebel1314", //6*************************************************
+      "name": "Siebel1314",
       "description": "You are in Siebel 1314.  There are happy CS 126 students doing a code review.",
       "directions": [
         {
@@ -103,16 +206,25 @@
       ]
     },
     {
-      "name": "SiebelBasement", //7***********************************************
+      "name": "SiebelBasement",
       "description": "You are in the basement of Siebel.  You see tables with students working and door to computer labs.",
-      "items": ["pencil"],
+      "items":  [
+        {
+          "name": "coin",
+          "damage": 5.0
+        },
+        {
+          "name": "coin",
+          "damage": 5.0
+        }
+      ],
       "directions": [
         {
           "directionName": "Up",
           "room": "SiebelEastHallway"
         }
-      ]
+      ],
+      "monstersInRoom": ["bigfoot"]
     }
   ]
 }
-]
