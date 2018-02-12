@@ -1,6 +1,7 @@
 package Adventure;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,11 +49,36 @@ public class GamePlay {
             }
         }
 
-        if (layout.getRooms()[roomIndex].getName().equalsIgnoreCase(layout.getStartingRoom())) {
-
+        String monsterListStr = "There are no monsters in this room.";
+        ArrayList<String> monsterList = new ArrayList<>();
+        if (layout.getRooms()[roomIndex].getMonstersInRoom() != null) {
+            if (layout.getRooms()[roomIndex].getMonstersInRoom().length == 0) {
+                monsterListStr = "There are no monsters in this room.";
+            }
+            String[] monsterInRoom = layout.getRooms()[roomIndex].getMonstersInRoom();
+            ArrayList<String> monstersTempList = new ArrayList<>(Arrays.asList(monsterInRoom));
+            monsterList.addAll(monstersTempList);
+            monsterListStr = String.format("Monsters in the room: %s", monsterList.toString());
         }
 
-        return String.format("%s\n%s\n%s\n%s", roomName, description, directionNames, itemInfo);
+        if (layout.getRooms()[roomIndex].getName().equalsIgnoreCase(layout.getEndingRoom())) {
+            return "break";
+        }
+
+        return String.format("%s\n%s\n%s\n%s\n%s", roomName, description,
+                directionNames, itemInfo, monsterListStr);
+    }
+
+    public static String jsonInfoDual(String command, int roomIndex, Layout layout, double plyrHealth, double monsterHealth) {
+        String playerHealth = PlayerInfo.playerHealthBar(PlayerInfo.FULL_HEALTH, plyrHealth);
+        Monster[] monstersArr = layout.getMonsters();
+        ArrayList<String> monstersNameList = new ArrayList<>();
+        for (int mIndex = 0; mIndex < monstersArr.length; mIndex++) {
+            monstersNameList.add(monstersArr[mIndex].getName());
+        }
+        
+        //double monsterHealth = layout.getRooms()[roomIndex].g
+        return "";
     }
 
     public static String handleUserInput(String userInput, int roomIndex, Layout layout) {
@@ -73,7 +99,10 @@ public class GamePlay {
         } else if (inputSplitArr[0].equalsIgnoreCase(PLAYER_INFO)) {
                 return PlayerInfo.getPlayerInfo();
         } else if (inputSplitArr[0].equalsIgnoreCase(DUAL)) {
-
+            if (Dual.canDualMonster(inputSplitArr[1], roomIndex, layout)) {
+                Adventure.isDual = true;
+                return "You are now in a dual";
+            }
         } else {
             return FALSE_COMMAND;
         }

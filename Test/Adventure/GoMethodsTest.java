@@ -22,8 +22,8 @@ public class GoMethodsTest {
     public void setUp() throws Exception {
         Gson gson = new Gson();
         String jsonContent = Adventure.getFileContentsAsString("siebel.json");
-        //Layout layout = new Layout();
         layout = gson.fromJson(jsonContent, Layout.class);
+        //Layout layout = new Layout();
         //layout = gson.fromJson(layoutGson, Layout.class);
 //        String url = "https://courses.engr.illinois.edu/cs126/adventure/siebel.json";
 //

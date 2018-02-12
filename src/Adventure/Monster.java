@@ -28,4 +28,17 @@ public class Monster {
     public void setHealth(double health) {
         this.health = health;
     }
+
+    public static String monsterHealth(double fullHealth, double currHealth) {
+        StringBuilder healthBar = new StringBuilder();
+        for (int i = 0; i < currHealth; i++) {
+            healthBar.append("#");
+        }
+        for (int i = 0; i < fullHealth - currHealth; i++) {
+            if (healthBar.length() <= fullHealth) {
+                healthBar.append("-");
+            }
+        }
+        return healthBar.toString();
+    }
 }

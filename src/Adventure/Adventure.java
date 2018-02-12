@@ -25,6 +25,8 @@ public class Adventure {
     public static double playerAttack;
     public static double playerDefense;
     public static double playerHealth;
+    public static boolean isDual = false;
+    public static double monsterHealth;
 
     public static String getFileContentsAsString(String filename) {
 
@@ -56,6 +58,7 @@ public class Adventure {
         System.out.println(layout.toString());
         gameRoomIndex = GamePlay.getStartingRoom(layout);
         player = layout.getPlayer();
+
         // this is a 'for each' loop; they are useful when you want to do something to
         // every element of a collection and you don't care about the index of the element
         for (String arg : args) {
@@ -81,65 +84,13 @@ public class Adventure {
         System.out.println("Press any key to play");
         while (sc.hasNextLine() && (!(sc.nextLine().equalsIgnoreCase(QUIT))
             || !(sc.nextLine().equalsIgnoreCase(EXIT)))) {
-            System.out.println(GamePlay.jsonInfo(gameRoomIndex, layout));
-            String userInput = sc.nextLine();
-            System.out.println(GamePlay.handleUserInput(userInput, gameRoomIndex, layout));
-//            //Interface Input:
-//
-//            System.out.println("You are on " + layout.getRooms()[gameRoomIndex].getName());
-//            if (layout.getRooms()[gameRoomIndex].getName().equals(layout.getStartingRoom())) {
-//                System.out.println("Your journey begins here.");
-//            }
-//            System.out.println(layout.getRooms()[gameRoomIndex].getDescription());
-//            Item[] itemArr = layout.getRooms()[gameRoomIndex].getItems();
-//            ArrayList<String> itemList = new ArrayList<>();
-//            if (itemArr != null) {
-//                //itemList = new ArrayList<>(Arrays.asList(itemArr));
-//            }
-//            if (itemList.isEmpty() || itemList == null) {
-//                System.out.println("This room does not have any items");
-//            } else {
-//                System.out.println("This room has these items: " + itemList.toString());
-//            }
-//            System.out.println("From here you can go: "
-//                    + GoMethods.getDirectionNamesAsList(gameRoomIndex, layout).toString());
-//            //End game when reached final room
-//            if (layout.getRooms()[gameRoomIndex].getName().equals(layout.getEndingRoom())) {
-//                System.out.println("You have reached the final destination.");
-//                break;
-//            }
-//
-//            //Interface output:
-//            String userInput = sc.nextLine();
-//            //Decides what type of command by user (GO, TakeOrDrop, List):
-//            String whichCommand = GamePlay.userInputCommand(userInput);
-//            if (whichCommand.equals(GamePlay.GO)) { //GO
-//                gameRoomIndex = GoMethods.goToNextRoom(userInput, gameRoomIndex, layout);
-//            }  else if (whichCommand.equals(GamePlay.TAKE_OR_DROP)) {
-//                if (TakeAndDropMethods.isTake(userInput)) { //TAKE
-//                    TakeAndDropMethods.removeItemFromList(userInput, gameRoomIndex, layout);
-//                    if (!(TakeAndDropMethods.getItemName(userInput).equalsIgnoreCase(""))) {
-//                        //usersItems.add(TakeAndDropMethods.getItemName(userInput));
-//                    }
-//                } else if (!(TakeAndDropMethods.isTake(userInput))) { //DROP
-//                    if (!(TakeAndDropMethods.getItemName(userInput).equalsIgnoreCase(""))) {
-//                        TakeAndDropMethods.dropItemFromList(userInput, gameRoomIndex, layout);
-//                        usersItems.remove(TakeAndDropMethods.getItemName(userInput));
-//                    }
-//                }
-//            } else if (whichCommand.equals(GamePlay.LIST)) {
-//                if (usersItems == null || usersItems.isEmpty()) {
-//                    System.out.println("You are carrying nothing");
-//                } else {
-//                    System.out.println("You are carrying " + usersItems.toString());
-//                }
-//                if (itemList.isEmpty() || itemList == null) {
-//                    System.out.println("This room is empty.");
-//                } else {
-//                    System.out.println("This room has these items: " + itemList.toString());
-//                }
-//                System.out.println("Press enter again to continue");
-//            }
+            if (!isDual) {
+                System.out.println(GamePlay.jsonInfo(gameRoomIndex, layout));
+                String userInput = sc.nextLine();
+                System.out.println(GamePlay.handleUserInput(userInput, gameRoomIndex, layout));
+            }
+
+
         }
         sc.close();
     }
