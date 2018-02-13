@@ -56,8 +56,6 @@ public class TakeAndDropMethods {
         layout.getRooms()[roomIndex].setItems(currItemArr);
         Item[] newItemArr = layout.getRooms()[roomIndex].getItems();
 
-
-
         if (newItemArr != oldTempItemArr) {
             return true;
         }
@@ -84,12 +82,7 @@ public class TakeAndDropMethods {
         currItemArr = currItemList.toArray(new Item[currItemList.size()]);
         layout.getRooms()[roomIndex].setItems(currItemArr);
 
-
-
         Item[] newItemArr = layout.getRooms()[roomIndex].getItems();
-
-
-
         if (newItemArr != tempItemArr) {
             return true;
         }

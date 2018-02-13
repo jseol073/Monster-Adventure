@@ -28,6 +28,7 @@ public class Adventure {
     public static boolean isDual = false;
     public static double monsterHealth;
     public static String command;
+    public static boolean endGame = false;
 
     public static String getFileContentsAsString(String filename) {
         // Java uses Paths as an operating system-independent specification of the location of files.
@@ -90,8 +91,6 @@ public class Adventure {
                 String userInput = sc.nextLine();
                 System.out.println(Dual.handleUserInputDual(userInput, gameRoomIndex, layout));
             }
-
-
         }
         sc.close();
     }

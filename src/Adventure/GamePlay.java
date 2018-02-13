@@ -3,7 +3,6 @@ package Adventure;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 public class GamePlay {
     public static final String GO = "go";
@@ -62,7 +61,7 @@ public class GamePlay {
         }
 
         if (layout.getRooms()[roomIndex].getName().equalsIgnoreCase(layout.getEndingRoom())) {
-            return "break";
+            Adventure.endGame = true;
         }
 
         return String.format("%s\n%s\n%s\n%s\n%s", roomName, description,

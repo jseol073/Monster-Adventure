@@ -39,6 +39,10 @@ public class Room {
         return monstersInRoom;
     }
 
+    public void setMonstersInRoom(String[] monstersInRoom) {
+        this.monstersInRoom = monstersInRoom;
+    }
+
     public HashMap<String, Double> getItemMap() {
         if (this.getItems() != null) {
             for (int itemIndex = 0; itemIndex < this.getItems().length; itemIndex++) {

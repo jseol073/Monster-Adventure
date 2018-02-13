@@ -3,34 +3,39 @@ package Adventure;
 import java.util.ArrayList;
 
 public class Dual {
-    private static final int MIN_ARR_LENGTH = 2;
+    private static final int MIN_ARR_LENGTH = 3;
     private static final String ATTACK = "attack";
     private static final String ATTACK_WITH_ITEM = "attack with item";
     private static final String DISENGAGE = "disengage";
     private static final String STATUS = "status";
     private static final String LIST = "list";
     private static final String PLAYERINFO = "playerInfo";
+    private static final String WITH = "with";
     public static final String FALSE_COMMAND = "I don't understand";
+    public static double monsterFullHealth;
 
 
     public static String handleUserInputDual(String userInput, int roomIndex, Layout layout) {
         String userInputLwrCase = userInput.toLowerCase();
         String lwrCaseTrimmed = userInputLwrCase.trim();
         String[] inputSplitArr = lwrCaseTrimmed.split("\\s+", MIN_ARR_LENGTH);
-        if (inputSplitArr.length >= 2) {
-            if (inputSplitArr[0].equalsIgnoreCase(ATTACK)) {
-                //return Attack.attackType()
+        if (inputSplitArr.length >= 3) {
+            if (inputSplitArr[0].equalsIgnoreCase(ATTACK)
+                    && inputSplitArr[1].equalsIgnoreCase(WITH)) {
+                return Attack.attackWithItem(inputSplitArr[2], roomIndex, layout);
             }
-        } else if (inputSplitArr[0].equalsIgnoreCase(DISENGAGE)) {
-            Adventure.isDual = false;
-        } else if (inputSplitArr[0].equalsIgnoreCase(STATUS)) {
-            //Dual.jsonInfoDual(command, gameRoomIndex, layout, playerHealth)
-        } else if (inputSplitArr[0].equalsIgnoreCase(LIST)) {
-            return List.listPlayerItems(layout);
-        } else if (inputSplitArr[0].equalsIgnoreCase(PLAYERINFO)) {
-            return PlayerInfo.getPlayerInfo();
-        } else if (inputSplitArr[0].equalsIgnoreCase(ATTACK)) {
-
+        } else if (inputSplitArr.length == 1) {
+            if (inputSplitArr[0].equalsIgnoreCase(DISENGAGE)) {
+                Adventure.isDual = false;
+            } else if (inputSplitArr[0].equalsIgnoreCase(STATUS)) {
+                //Dual.jsonInfoDual(command, gameRoomIndex, layout, playerHealth)
+            } else if (inputSplitArr[0].equalsIgnoreCase(LIST)) {
+                return List.listPlayerItems(layout);
+            } else if (inputSplitArr[0].equalsIgnoreCase(PLAYERINFO)) {
+                return PlayerInfo.getPlayerInfo();
+            } else if (inputSplitArr[0].equalsIgnoreCase(ATTACK)) {
+                return Attack.attack(Adventure.command, roomIndex, layout);
+            }
         } else {
             return FALSE_COMMAND;
         }
@@ -40,14 +45,9 @@ public class Dual {
     public static String jsonInfoDual(String command, int roomIndex, Layout layout, double plyrHealth) {
         String playerHealthBar = PlayerInfo.playerHealthBar(PlayerInfo.FULL_HEALTH, plyrHealth);
         Monster[] monstersArr = layout.getMonsters();
-        ArrayList<String> monstersNameList = new ArrayList<>();
-        for (int mIndex = 0; mIndex < monstersArr.length; mIndex++) {
-            monstersNameList.add(monstersArr[mIndex].getName());
-        }
         Monster currMonster = Dual.getMonsterInRoom(command, roomIndex, layout);
-        double fullMonsterHealth = currMonster.getFullHealth();
         double monsterHealth = currMonster.getHealth();
-        String monsterHealthBar = Monster.monsterHealth(fullMonsterHealth, monsterHealth);
+        String monsterHealthBar = currMonster.monsterHealth(monsterHealth);
         return String.format("You: %s\n%s: %s", playerHealthBar, currMonster.getName(), monsterHealthBar);
     }
 
@@ -89,17 +89,10 @@ public class Dual {
             for (int mIndex = 0; mIndex < monstersArr.length; mIndex++) {
                 if (monsterName.equalsIgnoreCase(monstersArr[mIndex].getName())) {
                     currMonster = monstersArr[mIndex];
+                    monsterFullHealth = currMonster.getHealth();
                 }
             }
         }
         return currMonster;
-    }
-
-    public static void dualMonster(String command, int roomIndex, Layout layout) {
-        String[] commandSplit = command.split("\\s+");
-        String monsterName = getMonsterName(commandSplit[0], roomIndex, layout);
-        if (canDualMonster(command, roomIndex, layout)) {
-
-        }
     }
 }

@@ -5,7 +5,6 @@ public class Monster {
     private double attack;
     private double defense;
     private double health;
-    public static double fullHealth;
 
     public Monster() {
     }
@@ -30,21 +29,16 @@ public class Monster {
         this.health = health;
     }
 
-    public static String monsterHealth(double fullHealth, double currHealth) {
+    public String monsterHealth(double currHealth) {
         StringBuilder healthBar = new StringBuilder();
         for (int i = 0; i < currHealth; i++) {
             healthBar.append("#");
         }
-        for (int i = 0; i < fullHealth - currHealth; i++) {
-            if (healthBar.length() <= fullHealth) {
+        for (int i = 0; i < Dual.monsterFullHealth - currHealth; i++) {
+            if (healthBar.length() <= Dual.monsterFullHealth) {
                 healthBar.append("-");
             }
         }
         return healthBar.toString();
-    }
-
-    public final double getFullHealth() {
-        double fullHealth = this.getHealth();
-        return fullHealth;
     }
 }
