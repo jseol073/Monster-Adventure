@@ -1,5 +1,6 @@
 package Adventure;
 
+import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 
 public class Dual {
@@ -12,9 +13,15 @@ public class Dual {
     private static final String PLAYERINFO = "playerInfo";
     private static final String WITH = "with";
     public static final String FALSE_COMMAND = "I don't understand";
-    public static double monsterFullHealth;
+    //public static double monsterFullHealth;
 
-
+    /**
+     * During a duel, this method handles the input of the user
+     * @param userInput, the input of the user
+     * @param roomIndex, the index of the room where the player currently is
+     * @param layout
+     * @return
+     */
     public static String handleUserInputDual(String userInput, int roomIndex, Layout layout) {
         String userInputLwrCase = userInput.toLowerCase();
         String lwrCaseTrimmed = userInputLwrCase.trim();
@@ -28,13 +35,16 @@ public class Dual {
             if (inputSplitArr[0].equalsIgnoreCase(DISENGAGE)) {
                 Adventure.isDual = false;
             } else if (inputSplitArr[0].equalsIgnoreCase(STATUS)) {
-                //Dual.jsonInfoDual(command, gameRoomIndex, layout, playerHealth)
+                return Dual.jsonInfoDual(Adventure.command, Adventure.gameRoomIndex, layout, Adventure.playerHealth);
             } else if (inputSplitArr[0].equalsIgnoreCase(LIST)) {
                 return List.listPlayerItems(layout);
             } else if (inputSplitArr[0].equalsIgnoreCase(PLAYERINFO)) {
                 return PlayerInfo.getPlayerInfo();
             } else if (inputSplitArr[0].equalsIgnoreCase(ATTACK)) {
                 return Attack.attack(Adventure.command, roomIndex, layout);
+            } else if (inputSplitArr[0].equalsIgnoreCase(Adventure.QUIT)
+                || inputSplitArr[0].equalsIgnoreCase(Adventure.EXIT)) {
+                Adventure.isEndGame = true;
             }
         } else {
             return FALSE_COMMAND;
@@ -42,18 +52,25 @@ public class Dual {
         return "";
     }
 
-    public static String jsonInfoDual(String command, int roomIndex, Layout layout, double plyrHealth) {
-        String playerHealthBar = PlayerInfo.playerHealthBar(PlayerInfo.FULL_HEALTH, plyrHealth);
-        Monster[] monstersArr = layout.getMonsters();
-        Monster currMonster = Dual.getMonsterInRoom(command, roomIndex, layout);
+    /**
+     * During a duel, after each iteration, this method prints the monster's and player's health
+     * @param maybeMonster, possible monster's name
+     * @param roomIndex
+     * @param layout
+     * @param plyrHealth
+     * @return
+     */
+    public static String jsonInfoDual(String maybeMonster, int roomIndex, Layout layout, double plyrHealth) {
+        String playerHealthBar = PlayerInfo.playerHealthBar(Adventure.player.getFullHealth(), plyrHealth);
+        Monster currMonster = Dual.getMonsterInRoom(maybeMonster, roomIndex, layout);
         double monsterHealth = currMonster.getHealth();
-        String monsterHealthBar = currMonster.monsterHealth(monsterHealth);
+        String monsterHealthBar = currMonster.monsterGetHealthBar(monsterHealth);
         return String.format("You: %s\n%s: %s", playerHealthBar, currMonster.getName(), monsterHealthBar);
     }
 
-    public static boolean canDualMonster(String command, int roomIndex, Layout layout) {
+    public static boolean canDualMonster(String maybeMonsterName, int roomIndex, Layout layout) {
         Monster[] monsterArr = layout.getMonsters();
-        String monsterName = getMonsterName(command, roomIndex, layout);
+        String monsterName = getMonsterName(maybeMonsterName, roomIndex, layout);
         ArrayList<String>  monsterNameList = new ArrayList<>();
         for (int monsterIndex = 0; monsterIndex < monsterArr.length; monsterIndex++) {
             monsterNameList.add(monsterArr[monsterIndex].getName());
@@ -81,15 +98,25 @@ public class Dual {
         return monsterName;
     }
 
-    public static Monster getMonsterInRoom(String command, int roomIndex, Layout layout) {
+    /**
+     * Checks if user's input of a possible monster name is referred to a monster in the same room as the player's
+     * @param maybeMonster
+     * @param roomIndex
+     * @param layout
+     * @return
+     */
+    public static Monster getMonsterInRoom(String maybeMonster, int roomIndex, Layout layout) {
         Monster currMonster = new Monster();
-        String monsterName = Dual.getMonsterName(command, roomIndex, layout);
+        String monsterName = Dual.getMonsterName(maybeMonster, roomIndex, layout);
         if (layout.getMonsters() != null) {
             Monster[] monstersArr = layout.getMonsters();
             for (int mIndex = 0; mIndex < monstersArr.length; mIndex++) {
                 if (monsterName.equalsIgnoreCase(monstersArr[mIndex].getName())) {
                     currMonster = monstersArr[mIndex];
-                    monsterFullHealth = currMonster.getHealth();
+                    if (currMonster.getFullHealth() == null) {
+                        double tempMHealth = currMonster.getHealth();
+                        currMonster.setFullHealth(tempMHealth);
+                    }
                 }
             }
         }

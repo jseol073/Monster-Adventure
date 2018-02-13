@@ -53,15 +53,16 @@ public class GamePlay {
         if (layout.getRooms()[roomIndex].getMonstersInRoom() != null) {
             if (layout.getRooms()[roomIndex].getMonstersInRoom().length == 0) {
                 monsterListStr = "There are no monsters in this room.";
+            } else {
+                String[] monsterInRoom = layout.getRooms()[roomIndex].getMonstersInRoom();
+                ArrayList<String> monstersTempList = new ArrayList<>(Arrays.asList(monsterInRoom));
+                monsterList.addAll(monstersTempList);
+                monsterListStr = String.format("Monsters in the room: %s", monsterList.toString());
             }
-            String[] monsterInRoom = layout.getRooms()[roomIndex].getMonstersInRoom();
-            ArrayList<String> monstersTempList = new ArrayList<>(Arrays.asList(monsterInRoom));
-            monsterList.addAll(monstersTempList);
-            monsterListStr = String.format("Monsters in the room: %s", monsterList.toString());
         }
 
         if (layout.getRooms()[roomIndex].getName().equalsIgnoreCase(layout.getEndingRoom())) {
-            Adventure.endGame = true;
+            Adventure.isEndGame = true;
         }
 
         return String.format("%s\n%s\n%s\n%s\n%s", roomName, description,
@@ -72,30 +73,35 @@ public class GamePlay {
         String userInputLwrCase = userInput.toLowerCase();
         String lwrCaseTrimmed = userInputLwrCase.trim();
         String[] inputSplitArr = lwrCaseTrimmed.split("\\s+", MIN_ARR_LENGTH);
-        if (inputSplitArr.length >= 2) {
-            if (inputSplitArr[0].equalsIgnoreCase(GO) && !inputSplitArr[1].isEmpty()) {
-                return GoMethods.goingToNextRoom(inputSplitArr[1], roomIndex, layout);
-            } else if (inputSplitArr[0].equalsIgnoreCase(TAKE)
-                    || inputSplitArr[0].equalsIgnoreCase(DROP)) {
-                if (inputSplitArr[0].equalsIgnoreCase(TAKE)) {
-                    TakeAndDropMethods.takeItem(inputSplitArr[1], roomIndex, layout);
-                } else if (inputSplitArr[0].equalsIgnoreCase(DROP)) {
-                    TakeAndDropMethods.dropItem(inputSplitArr[1], roomIndex, layout);
+        if (!lwrCaseTrimmed.isEmpty()) {
+            if (inputSplitArr.length >= 2) {
+                if (inputSplitArr[0].equalsIgnoreCase(GO) && !inputSplitArr[1].isEmpty()) {
+                    return GoMethods.goingToNextRoom(inputSplitArr[1], roomIndex, layout);
+                } else if (inputSplitArr[0].equalsIgnoreCase(TAKE)
+                        || inputSplitArr[0].equalsIgnoreCase(DROP)) {
+                    if (inputSplitArr[0].equalsIgnoreCase(TAKE)) {
+                        TakeAndDropMethods.takeItem(inputSplitArr[1], roomIndex, layout);
+                    } else if (inputSplitArr[0].equalsIgnoreCase(DROP)) {
+                        TakeAndDropMethods.dropItem(inputSplitArr[1], roomIndex, layout);
+                    }
+                } else if (inputSplitArr[0].equalsIgnoreCase(DUAL)) {
+                    if (Dual.canDualMonster(inputSplitArr[1], roomIndex, layout)) {
+                        Adventure.isDual = true;
+                        Adventure.command = inputSplitArr[1];
+                        return String.format("You are now in a dual with %s",
+                                Dual.getMonsterName(inputSplitArr[1], roomIndex, layout));
+                    }
                 }
-            } else if (inputSplitArr[0].equalsIgnoreCase(DUAL)) {
-                if (Dual.canDualMonster(inputSplitArr[1], roomIndex, layout)) {
-                    Adventure.isDual = true;
-                    Adventure.command = inputSplitArr[1];
-                    return String.format("You are now in a dual with %s",
-                            Dual.getMonsterName(inputSplitArr[1], roomIndex, layout));
-                }
+            } else if (inputSplitArr[0].equalsIgnoreCase(LIST)) {
+                return List.listPlayerItems(layout);
+            } else if (inputSplitArr[0].equalsIgnoreCase(PLAYER_INFO)) {
+                return PlayerInfo.getPlayerInfo();
+            } else if (inputSplitArr[0].equalsIgnoreCase(Adventure.QUIT)
+                    || inputSplitArr[0].equalsIgnoreCase(Adventure.EXIT)) {
+                Adventure.isEndGame = true;
+            } else {
+                return FALSE_COMMAND;
             }
-        } else if (inputSplitArr[0].equalsIgnoreCase(LIST)) {
-            return List.listPlayerItems(layout);
-        } else if (inputSplitArr[0].equalsIgnoreCase(PLAYER_INFO)) {
-            return PlayerInfo.getPlayerInfo();
-        } else {
-            return FALSE_COMMAND;
         }
         return "";
     }

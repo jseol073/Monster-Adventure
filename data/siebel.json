@@ -19,50 +19,43 @@
       "name": "lion",
       "attack": 2.0,
       "defense": 1.0,
-      "health": 10.0,
-      "level" : 1
+      "health": 10.0
     },
     {
       "name": "bear",
       "attack": 2.2,
       "defense": 1.5,
-      "health": 12.0,
-      "level" : 1
+      "health": 12.0
     },
     {
       "name": "tiger",
       "attack": 2.5,
       "defense": 0.8,
-      "health": 9.0,
-      "level" : 1
+      "health": 9.0
     },
     {
       "name": "elephant",
       "attack": 1.0,
       "defense": 2.5,
-      "health": 30.0,
-      "level" : 1
+      "health": 30.0
     },
     {
       "name": "zombie",
       "attack": 3.0,
       "defense": 0.5,
-      "health": 12.0,
-      "level" : 2
+      "health": 12.0
     },
     {
       "name": "ghost",
       "attack": 9.0,
       "defense": 2.0,
-      "health": 13.0,
-      "level" : 2
+      "health": 13.0
     },
     {
       "name": "bigfoot",
       "attack": 9.5,
       "defense": 2.0,
-      "health": 15.0,
-      "level" : 2
+      "health": 15.0
     }
   ],
   "rooms": [

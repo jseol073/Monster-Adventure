@@ -6,6 +6,7 @@ public class Player {
     private double attack;
     private double defense;
     private double health;
+    private Double fullHealth;
     private int level;
 
     public Player() {
@@ -45,5 +46,21 @@ public class Player {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public void setAttack(double attack) {
+        this.attack = attack;
+    }
+
+    public void setDefense(double defense) {
+        this.defense = defense;
+    }
+
+    public Double getFullHealth() {
+        return fullHealth;
+    }
+
+    public void setFullHealth(Double fullHealth) {
+        this.fullHealth = fullHealth;
     }
 }

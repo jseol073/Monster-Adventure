@@ -21,6 +21,6 @@ public class MonsterTest {
         Monster currMonster = Dual.getMonsterInRoom("lion", 1, layout);
         double currHealth = 5;
         String output = "#####-----";
-        assertEquals(output, currMonster.monsterHealth(currHealth));
+        assertEquals(output, currMonster.monsterGetHealthBar(currHealth));
     }
 }

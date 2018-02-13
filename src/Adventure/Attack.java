@@ -5,6 +5,13 @@ import java.util.Arrays;
 
 public class Attack {
 
+    /**
+     *
+     * @param command
+     * @param roomIndex
+     * @param layout
+     * @return
+     */
     public static String attack(String command, int roomIndex, Layout layout) {
         Monster currMonster = Dual.getMonsterInRoom(command, roomIndex, layout);
         double plyrDamage = Adventure.playerAttack - currMonster.getDefense();
@@ -13,13 +20,13 @@ public class Attack {
         Adventure.player.setHealth(Adventure.playerHealth - monsterDamage);
 
         if (Adventure.player.getHealth() <= 0.0) {
-            Adventure.endGame = true;
+            Adventure.isEndGame = true;
             return "You died.";
         }
         if (currMonster.getHealth() <= 0.0) {
             Adventure.isDual = false;
-            //remove monster from String[] monstersInRoom
-            return String.format("You beat %s", currMonster.getName());
+            removeMonsterFromArr(currMonster, roomIndex, layout);
+            return increaseExp(Adventure.playerLevel, currMonster);
         }
         return "";
     }
@@ -33,13 +40,13 @@ public class Attack {
             if (doesPlayerHaveItem(itemLongName)) {
                 playersItem = getPlayersItem(itemLongName);
             } else {
-                return "Player does not have any items.";
+                return "Player does not have that item.";
             }
         } else {
             if (doesPlayerHaveItem(maybeItemName)) {
                 playersItem = getPlayersItem(maybeItemName);
             } else {
-                return "Player does not have any items.";
+                return "Player does not have that item.";
             }
         }
         Monster currMonster = Dual.getMonsterInRoom(Adventure.command, roomIndex, layout);
@@ -49,14 +56,14 @@ public class Attack {
         Adventure.player.setHealth(Adventure.playerHealth - monsterDamage);
 
         if (Adventure.player.getHealth() <= 0.0) {
-            Adventure.endGame = true;
+            Adventure.isEndGame = true;
             return "You died.";
         }
         if (currMonster.getHealth() <= 0.0) {
             Adventure.isDual = false;
             removeMonsterFromArr(currMonster, roomIndex, layout);
-            //remove lion from String[] monstersInRoom
-            return String.format("You beat %s", currMonster.getName());
+            //increase players expererience
+            return increaseExp(Adventure.playerLevel, currMonster);
         }
         return "";
     }
@@ -94,4 +101,36 @@ public class Attack {
         }
         return new Item();
     }
+
+    public static String increaseExp(int plyrLevel, Monster currMonster) {
+        double experience = 0;
+        if (plyrLevel <= 2) {
+            experience = (((currMonster.getAttack() + currMonster.getDefense()) / 2)
+                    + currMonster.getFullHealth()) * 20;
+            System.out.printf("Experience: %.2f\n", experience);
+            if (plyrLevel == 1) {
+                if (experience >= 25.00) {
+                    Adventure.player.setLevel(2);
+                    Adventure.player.setAttack(Adventure.playerAttack * 1.5);
+                    Adventure.player.setDefense(Adventure.playerDefense * 1.5);
+                    Adventure.player.setHealth(Adventure.player.getFullHealth() * 1.3);
+                    System.out.print("You have leveled up to 2!\n");
+                }
+            } else if (plyrLevel == 2) {
+                if (experience >= 50.00) {
+                    Adventure.player.setLevel(3);
+                    Adventure.player.setAttack(Adventure.playerAttack * 1.5);
+                    Adventure.player.setDefense(Adventure.playerDefense * 1.5);
+                    Adventure.player.setHealth(Adventure.player.getFullHealth() * 1.3);
+                    System.out.print("You have leveled up to 3!\n");
+                }
+            }
+        }
+        else if (plyrLevel >= 3) {
+
+        }
+        return String.format("You beat %s", currMonster.getName());
+    }
+
+
 }

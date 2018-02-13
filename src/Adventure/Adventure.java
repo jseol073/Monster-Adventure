@@ -1,13 +1,10 @@
 package Adventure;
 
 import com.google.gson.Gson;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,8 +13,8 @@ import java.util.*;
 public class Adventure {
 
     private static final int STATUS_OK = 200;
-    private static final String QUIT = "QUIT";
-    private static final String EXIT = "EXIT";
+    public static final String QUIT = "QUIT";
+    public static final String EXIT = "EXIT";
     public static int gameRoomIndex;
     public static Player player = new Player();
     public static ArrayList<Item> playerItemList = new ArrayList<>();
@@ -26,16 +23,14 @@ public class Adventure {
     public static double playerDefense;
     public static double playerHealth;
     public static boolean isDual = false;
-    public static double monsterHealth;
     public static String command;
-    public static boolean endGame = false;
+    public static boolean isEndGame = false;
 
     public static String getFileContentsAsString(String filename) {
         // Java uses Paths as an operating system-independent specification of the location of files.
         // In this case, we're looking for files that are in a directory called 'data' located in the
         // root directory of the project, which is the 'current working directory'.
         final Path path = FileSystems.getDefault().getPath("data", filename);
-
         try {
             // Read all of the bytes out of the file specified by 'path' and then convert those bytes
             // into a Java String.  Because this operation can fail if the file doesn't exist, we
@@ -53,33 +48,34 @@ public class Adventure {
 
     public static void main(String[] args) {
         Gson gson = new Gson();
-        String jsonContent = getFileContentsAsString("siebel.json");
-        Layout layout = new Layout();
-        layout = gson.fromJson(jsonContent, Layout.class);
+        String jsonContent;
+        if (args.length <= 0) {
+            jsonContent = getFileContentsAsString("siebel.json");
+
+        } else {
+            jsonContent = getFileContentsAsString(args[0]);
+        }
+        Layout layout = gson.fromJson(jsonContent, Layout.class);
         gameRoomIndex = GamePlay.getStartingRoom(layout);
         player = layout.getPlayer();
+
+        if (player.getFullHealth() == null) {
+            double tempFullHealth = player.getHealth();
+            player.setFullHealth(tempFullHealth);
+        }
         // this is a 'for each' loop; they are useful when you want to do something to
         // every element of a collection and you don't care about the index of the element
         for (String arg : args) {
             System.out.print("\"" + arg + "\" ");
         }
-//        if (args.length <= 0) {
-//            System.out.println("File is too small");
-//        }
-        //Catching exceptions regarding the url
-//        String url = "https://courses.engr.illinois.edu/cs126/adventure/siebel.json";
-//        try {
-//            layout = makeApiRequest(url);
-//        } catch (UnirestException e) {
-//            System.out.println("Network not responding");
-//        } catch (MalformedURLException e) {
-//            System.out.println("Bad URL: " + url);
-//        }
+
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Press any key and enter to play");
-        while (sc.hasNextLine() && (!(sc.nextLine().equalsIgnoreCase(QUIT))
+        while (!isEndGame && sc.hasNextLine() &&  (!(sc.nextLine().equalsIgnoreCase(QUIT))
             || !(sc.nextLine().equalsIgnoreCase(EXIT)))) {
+            playerLevel = player.getLevel();
+            playerDefense = player.getDefense();
             playerHealth = player.getHealth();
             playerAttack = player.getAttack();
             if (!isDual) {
@@ -95,26 +91,5 @@ public class Adventure {
         sc.close();
     }
 
-    /**
-     *
-     * @param url
-     * @return Layout object through gson and unirest
-     * @throws UnirestException
-     * @throws MalformedURLException
-     */
-//    public static Layout makeApiRequest(String url) throws UnirestException, MalformedURLException {
-//        final HttpResponse<String> stringHttpResponse;
-//        Layout layout = new Layout();
-//        // This will throw MalformedURLException if the url is malformed.
-//        new URL(url);
-//        stringHttpResponse = Unirest.get(url).asString();
-//        // Check to see if the request was successful; if so, convert the payload JSON into Java objects
-//        if (stringHttpResponse.getStatus() == STATUS_OK) {
-//            String json = stringHttpResponse.getBody();
-//            Gson gson = new Gson();
-//            layout = gson.fromJson(json, Layout.class);
-//        }
-//        return layout;
-//    }
 }
 
