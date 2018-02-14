@@ -203,11 +203,7 @@
       "description": "You are in the basement of Siebel.  You see tables with students working and door to computer labs.",
       "items":  [
         {
-          "name": "coin",
-          "damage": 5.0
-        },
-        {
-          "name": "coin",
+          "name": "bat",
           "damage": 5.0
         }
       ],

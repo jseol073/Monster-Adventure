@@ -19,7 +19,16 @@ public class AttackTest {
     }
 
     @Test
-    public void attackType() {
+    public void expForHigherLevelsTest() {
+        int playerLevel = 3;
+        double output = 75;
+        assertEquals(output, Attack.expForHigherLevels(playerLevel), 0.01);
     }
 
+    @Test
+    public void expForHigherLevelsOtherTest() {
+        int playerLevel = 4;
+        double output = 125;
+        assertEquals(output, Attack.expForHigherLevels(playerLevel), 0.01);
+    }
 }

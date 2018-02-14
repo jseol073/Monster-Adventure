@@ -63,12 +63,12 @@ public class Adventure {
             double tempFullHealth = player.getHealth();
             player.setFullHealth(tempFullHealth);
         }
+
         // this is a 'for each' loop; they are useful when you want to do something to
         // every element of a collection and you don't care about the index of the element
         for (String arg : args) {
             System.out.print("\"" + arg + "\" ");
         }
-
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Press any key and enter to play");
@@ -78,6 +78,7 @@ public class Adventure {
             playerDefense = player.getDefense();
             playerHealth = player.getHealth();
             playerAttack = player.getAttack();
+
             if (!isDual) {
                 System.out.println(GamePlay.jsonInfo(gameRoomIndex, layout));
                 String userInput = sc.nextLine();
