@@ -12,7 +12,6 @@ import java.util.*;
 
 public class Adventure {
 
-    private static final int STATUS_OK = 200;
     public static final String QUIT = "QUIT";
     public static final String EXIT = "EXIT";
     public static int gameRoomIndex;
@@ -55,10 +54,8 @@ public class Adventure {
         } else {
             jsonContent = getFileContentsAsString(args[0]);
         }
-        Layout layout = gson.fromJson(jsonContent, Layout.class);
-        gameRoomIndex = GamePlay.getStartingRoom(layout);
-        player = layout.getPlayer();
 
+        //Sets the fullHealth of the player:
         if (player.getFullHealth() == null) {
             double tempFullHealth = player.getHealth();
             player.setFullHealth(tempFullHealth);
@@ -72,25 +69,27 @@ public class Adventure {
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Press any key and enter to play");
-        while (!isEndGame && sc.hasNextLine() &&  (!(sc.nextLine().equalsIgnoreCase(QUIT))
+        Layout layout = gson.fromJson(jsonContent, Layout.class);
+        gameRoomIndex = GamePlay.getStartingRoom(layout);
+        player = layout.getPlayer();
+        while (!isEndGame && sc.hasNextLine() && (!(sc.nextLine().equalsIgnoreCase(QUIT))
             || !(sc.nextLine().equalsIgnoreCase(EXIT)))) {
             playerLevel = player.getLevel();
             playerDefense = player.getDefense();
             playerHealth = player.getHealth();
             playerAttack = player.getAttack();
 
-            if (!isDual) {
-                System.out.println(GamePlay.jsonInfo(gameRoomIndex, layout));
-                String userInput = sc.nextLine();
-                System.out.println(GamePlay.handleUserInput(userInput, gameRoomIndex, layout));
-            } else {
+            if (isDual) {
                 System.out.println(Dual.jsonInfoDual(command, gameRoomIndex, layout, playerHealth));
                 String userInput = sc.nextLine();
                 System.out.println(Dual.handleUserInputDual(userInput, gameRoomIndex, layout));
+            } else {
+                System.out.println(GamePlay.jsonInfo(gameRoomIndex, layout));
+                String userInput = sc.nextLine();
+                System.out.println(GamePlay.handleUserInput(userInput, gameRoomIndex, layout));
             }
         }
         sc.close();
     }
-
 }
 

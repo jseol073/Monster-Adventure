@@ -45,15 +45,12 @@ public class GoMethods {
         String aDirectionRoom = getADirectionRoom(aDirection, directions);
         Room[] roomArr = layout.getRooms();
         if (canGoDirection(aDirection, roomIndex, layout)) {
-            //System.out.println(aDirectionRoom);
             for (int rIndex = 0; rIndex < roomArr.length; rIndex++) {
-                //System.out.println(roomArr[rIndex].getName());
                 if (aDirectionRoom.equalsIgnoreCase(roomArr[rIndex].getName())) {
                     Adventure.gameRoomIndex = rIndex;
                 }
             }
         }
-        //System.out.println("Room name: " + layout.getRooms()[Adventure.gameRoomIndex]);
         return falseCommand;
     }
 
@@ -70,7 +67,7 @@ public class GoMethods {
     }
 
     public static String getADirectionRoom(String aDirection, Directions[] directions) {
-        String directionRoom = "blah";
+        String directionRoom = "";
         for (int i = 0; i < directions.length; i++) {
             if (aDirection.equalsIgnoreCase(directions[i].getDirectionName())) {
                 directionRoom = directions[i].getRoom();

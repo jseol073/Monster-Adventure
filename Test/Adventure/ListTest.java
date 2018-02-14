@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class GamePlayTest {
+public class ListTest {
     private Layout layout = new Layout();
 
     @Before
@@ -17,8 +17,9 @@ public class GamePlayTest {
     }
 
     @Test
-    public void getStartingRoomTest() {
-        int output = 0;
-        assertEquals(output, GamePlay.getStartingRoom(layout));
+    public void listPlayerItemsNullTest() {
+        layout.getPlayer().setItems(null);
+        String output = "You are carrying nothing";
+        assertEquals(output, List.listPlayerItems());
     }
 }

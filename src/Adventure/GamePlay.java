@@ -13,7 +13,6 @@ public class GamePlay {
     public static final String DUAL = "dual";
     public static final String FALSE_COMMAND = "I don't understand";
     private static final int MIN_ARR_LENGTH = 2;
-    private static final int MIN_STR_LENGTH = 4;
 
     public static int getStartingRoom(Layout layout) {
         Room[] allRooms = layout.getRooms();
@@ -62,6 +61,7 @@ public class GamePlay {
         }
 
         if (layout.getRooms()[roomIndex].getName().equalsIgnoreCase(layout.getEndingRoom())) {
+            System.out.println("You have reached the end of the journey. Press enter to end game.");
             Adventure.isEndGame = true;
         }
 
@@ -73,8 +73,9 @@ public class GamePlay {
         String userInputLwrCase = userInput.toLowerCase();
         String lwrCaseTrimmed = userInputLwrCase.trim();
         String[] inputSplitArr = lwrCaseTrimmed.split("\\s+", MIN_ARR_LENGTH);
+
         if (!lwrCaseTrimmed.isEmpty()) {
-            if (inputSplitArr.length >= 2) {
+            if (inputSplitArr.length >= MIN_ARR_LENGTH) {
                 if (inputSplitArr[0].equalsIgnoreCase(GO) && !inputSplitArr[1].isEmpty()) {
                     return GoMethods.goingToNextRoom(inputSplitArr[1], roomIndex, layout);
                 } else if (inputSplitArr[0].equalsIgnoreCase(TAKE)
@@ -93,7 +94,7 @@ public class GamePlay {
                     }
                 }
             } else if (inputSplitArr[0].equalsIgnoreCase(LIST)) {
-                return List.listPlayerItems(layout);
+                return List.listPlayerItems();
             } else if (inputSplitArr[0].equalsIgnoreCase(PLAYER_INFO)) {
                 return PlayerInfo.getPlayerInfo();
             } else if (inputSplitArr[0].equalsIgnoreCase(Adventure.QUIT)

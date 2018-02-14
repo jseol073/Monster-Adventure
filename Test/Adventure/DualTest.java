@@ -57,12 +57,4 @@ public class DualTest {
         Monster output = layout.getMonsters()[0];
         assertEquals(output, Dual.getMonsterInRoom(command, roomIndex, layout));
     }
-
-    @Test
-    public void handleUserInputDualTest() {
-        String userInput = "attack";
-        roomIndex = 1;
-        Monster output = layout.getMonsters()[0];
-        assertEquals(output, Dual.getMonsterInRoom(command, roomIndex, layout));
-    }
 }

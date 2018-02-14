@@ -13,7 +13,6 @@ public class Dual {
     private static final String PLAYERINFO = "playerInfo";
     private static final String WITH = "with";
     public static final String FALSE_COMMAND = "I don't understand";
-    //public static double monsterFullHealth;
 
     /**
      * During a duel, this method handles the input of the user
@@ -26,7 +25,7 @@ public class Dual {
         String userInputLwrCase = userInput.toLowerCase();
         String lwrCaseTrimmed = userInputLwrCase.trim();
         String[] inputSplitArr = lwrCaseTrimmed.split("\\s+", MIN_ARR_LENGTH);
-        if (inputSplitArr.length >= 3) {
+        if (inputSplitArr.length >= MIN_ARR_LENGTH) {
             if (inputSplitArr[0].equalsIgnoreCase(ATTACK)
                     && inputSplitArr[1].equalsIgnoreCase(WITH)) {
                 return Attack.attackWithItem(inputSplitArr[2], roomIndex, layout);
@@ -37,7 +36,7 @@ public class Dual {
             } else if (inputSplitArr[0].equalsIgnoreCase(STATUS)) {
                 return Dual.jsonInfoDual(Adventure.command, Adventure.gameRoomIndex, layout, Adventure.playerHealth);
             } else if (inputSplitArr[0].equalsIgnoreCase(LIST)) {
-                return List.listPlayerItems(layout);
+                return List.listPlayerItems();
             } else if (inputSplitArr[0].equalsIgnoreCase(PLAYERINFO)) {
                 return PlayerInfo.getPlayerInfo();
             } else if (inputSplitArr[0].equalsIgnoreCase(ATTACK)) {
@@ -83,13 +82,20 @@ public class Dual {
         return false;
     }
 
-    public static String getMonsterName(String command, int roomIndex, Layout layout) {
+    /**
+     * Helper method for getMonsterinRoom, canDuelMonster, attack, and attackWithItem
+     * @param maybeMonster
+     * @param roomIndex
+     * @param layout
+     * @return the string of the monster's name in the room the user is in
+     */
+    public static String getMonsterName(String maybeMonster, int roomIndex, Layout layout) {
         String monsterName = "";
         if (layout.getRooms()[roomIndex].getMonstersInRoom() != null) {
             String[] monstersInCurrRoom = layout.getRooms()[roomIndex].getMonstersInRoom();
             if (monstersInCurrRoom.length != 0) {
                 for (int i = 0; i < monstersInCurrRoom.length; i++) {
-                    if (command.equalsIgnoreCase(monstersInCurrRoom[i])) {
+                    if (maybeMonster.equalsIgnoreCase(monstersInCurrRoom[i])) {
                         monsterName = monstersInCurrRoom[i];
                     }
                 }
@@ -100,26 +106,28 @@ public class Dual {
 
     /**
      * Checks if user's input of a possible monster name is referred to a monster in the same room as the player's
+     * Also sets the monsterFullHealth variable in the monster class. This variable is the health
+     * of the monster before the game
      * @param maybeMonster
      * @param roomIndex
      * @param layout
-     * @return
+     * @return Monster object
      */
     public static Monster getMonsterInRoom(String maybeMonster, int roomIndex, Layout layout) {
         Monster currMonster = new Monster();
-        String monsterName = Dual.getMonsterName(maybeMonster, roomIndex, layout);
-        if (layout.getMonsters() != null) {
-            Monster[] monstersArr = layout.getMonsters();
-            for (int mIndex = 0; mIndex < monstersArr.length; mIndex++) {
-                if (monsterName.equalsIgnoreCase(monstersArr[mIndex].getName())) {
-                    currMonster = monstersArr[mIndex];
-                    if (currMonster.getFullHealth() == null) {
-                        double tempMHealth = currMonster.getHealth();
-                        currMonster.setFullHealth(tempMHealth);
-                    }
+        String monsterName = getMonsterName(maybeMonster, roomIndex, layout);
+        Monster[] monstersArr = layout.getMonsters();
+        for (int mIndex = 0; mIndex < monstersArr.length; mIndex++) {
+            if (monsterName.equalsIgnoreCase(monstersArr[mIndex].getName())) {
+                currMonster = monstersArr[mIndex];
+                //sets fullHealth of current monster:
+                if (currMonster.getFullHealth() == null) {
+                    double tempMHealth = currMonster.getHealth();
+                    currMonster.setFullHealth(tempMHealth);
                 }
             }
         }
+
         return currMonster;
     }
 }

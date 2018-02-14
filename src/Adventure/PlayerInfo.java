@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 public class PlayerInfo {
 
+    /**
+     *
+     * @return String of player's level, attack, defense, and health
+     */
     public static String getPlayerInfo() {
         String healthBar = playerHealthBar(Adventure.player.getFullHealth(), Adventure.playerHealth);
         return String.format("Player Level: %d \nPlayer's Attack: %.2f\nPlayer's Defense: %.2f\n" +
