@@ -127,7 +127,6 @@ public class Dual {
                 }
             }
         }
-
         return currMonster;
     }
 }
